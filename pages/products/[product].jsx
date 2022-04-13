@@ -1,36 +1,37 @@
-import { getAllProducts, getProduct } from 'lib/shopify'
+import { getAllProducts, getProduct } from "lib/shopify";
+import ProductPageContent from "components/ProductPageContent";
 
 export default function Product({ product }) {
   return (
-    <div>
-      {product.title}
+    <div className="">
+      <ProductPageContent product={product} />
     </div>
- )
+  );
 }
 
 export async function getStaticPaths() {
-  const products = await getAllProducts()
+  const products = await getAllProducts();
 
-  const paths = products.map(product => {
-    const handle = String(product.node.handle)
+  const paths = products.map((product) => {
+    const handle = String(product.node.handle);
 
     return {
-      params: { product: handle }
-    }
-  })
+      params: { product: handle },
+    };
+  });
 
   return {
     paths,
-    fallback: false
-  }
+    fallback: false,
+  };
 }
 
 export async function getStaticProps({ params }) {
-  const product = await getProduct(params.product)
+  const product = await getProduct(params.product);
 
   return {
     props: {
-      product
-    }
-  }
+      product,
+    },
+  };
 }
