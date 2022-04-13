@@ -1,7 +1,8 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import { getProductsInCollection } from 'lib/shopify'
 
-export default function Home() {
+export default function Home({ products }) {
+  console.log(products)
+
   return (
     <div className="">
       hey
@@ -9,4 +10,12 @@ export default function Home() {
   )
 }
 
+export async function getStaticProps() {
+  const products = await getProductsInCollection()
 
+  return {
+    props: {
+      products
+    }
+  }
+}
